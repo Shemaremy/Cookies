@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Cookie.css";
 
 function CookieFunction() {
 
-  const [modal, setModal] = useState(true);
 
 
+  const [modal, setModal] = useState(false);
+
+  
+  
+  // This checks localStorage when the component first loads to see if the user has already accepted or rejected cookies. If no consent is found, it shows the modal.
+  useEffect(() => {
+    const cookieConsent = localStorage.getItem("cookieConsent");
+    if (!cookieConsent) {
+      setModal(true);
+    }
+  }, []);
+
+
+
+  
   const acceptCookie = () => {
-    setModal(!modal);
+    localStorage.setItem("cookieConsent", "accepted");
+    setModal(false);
   };
 
 
   const rejectCookie = () => {
-    setModal(!modal);
+    localStorage.setItem("cookieConsent", "rejected");
+    setModal(false);
   };
 
 
